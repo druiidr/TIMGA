@@ -1,5 +1,5 @@
-from flask import Flask, request, jsonify, render_template
-from flask_cors import CORS
+from flask import Flask, request, jsonify
+from flask_cors import CORS, cross_origin
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image as keras_image
 import numpy as np
@@ -9,7 +9,7 @@ import os
 import imageio
 
 app = Flask(__name__)
-CORS(app, origins=["https://druiidr.github.io"])  # Match root domain, not full path
+CORS(app, resources={r"/predict": {"origins": "https://druiidr.github.io"}}, supports_credentials=True)
 
 # Safe path to model (important for both local and production environments)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -28,12 +28,18 @@ def preprocess_image(img):
     img_array = img_array / 255.0
     return img_array
 
-@app.route("/predict", methods=["GET","POST"])
+@app.route("/predict", methods=["GET"])
 def index():
     return "Backend is running."
 
-@app.route("/predict", methods=["POST"])
+@app.route("/predict", methods=["POST", "OPTIONS"])
+@cross_origin(origins=["https://druiidr.github.io"])
 def predict():
+    # Handle preflight request
+    if request.method == "OPTIONS":
+        # Flask-CORS will add the appropriate headers
+        return '', 204
+
     try:
         if 'image' not in request.files:
             return jsonify({"success": False, "error": "No image or video provided"}), 400
