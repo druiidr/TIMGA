@@ -9,26 +9,28 @@ import os
 import imageio
 
 app = Flask(__name__)
-# Restrict CORS to your GitHub Pages domain for security
-CORS(app, origins=["https://druiidr.github.io/TIMGA/"])
+CORS(app, origins=["https://druiidr.github.io"])  # Match root domain, not full path
+
+# Safe path to model (important for both local and production environments)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "models", "detector model v2.1.3(curr).h5")
 
 # Load your Keras model
-model = load_model("models/detector model v2.1.2(curr).h5")
+model = load_model(MODEL_PATH)
 
-# Define your class labels (ensure this matches your model's training order)
+# Define class labels
 class_labels = ["Human", "AI"]
 
-# Image transform: always resize to 256x256
 def preprocess_image(img):
     img = img.resize((256, 256))
     img_array = keras_image.img_to_array(img)
     img_array = np.expand_dims(img_array, axis=0)
-    img_array = img_array / 255.0  # Normalize if your model expects it
+    img_array = img_array / 255.0
     return img_array
 
 @app.route("/", methods=["GET"])
 def index():
-    return render_template("index.html")
+    return "Backend is running."
 
 @app.route("/predict", methods=["POST"])
 def predict():
@@ -39,7 +41,7 @@ def predict():
         file = request.files["image"]
         filename = file.filename.lower()
 
-        # Handle video (mp4) with imageio
+        # Handle video
         if filename.endswith('.mp4'):
             with tempfile.NamedTemporaryFile(delete=False, suffix='.mp4') as temp_video:
                 file.save(temp_video.name)
@@ -56,15 +58,12 @@ def predict():
             if frame_count == 0:
                 reader.close()
                 os.remove(temp_video_path)
-                return jsonify({"success": False, "error": "Could not read video frames."}), 400
+                return jsonify({"success": False, "error": "Video has no frames."}), 400
 
             num_samples = min(30, frame_count)
             sample_indices = set(np.linspace(0, frame_count - 1, num_samples, dtype=int))
-            ai_count = 0
-            human_count = 0
-            ai_probs = []
-            human_probs = []
-            total = 0
+            ai_count = human_count = total = 0
+            ai_probs, human_probs = [], []
 
             for idx, frame in enumerate(reader):
                 if idx in sample_indices:
@@ -85,15 +84,12 @@ def predict():
             reader.close()
             os.remove(temp_video_path)
 
-            ai_percent = ai_count / total if total else 0
-            human_percent = human_count / total if total else 0
             majority_label = "AI" if ai_count > human_count else "Human"
-
             return jsonify({
                 "success": True,
                 "video_summary": {
-                    "ai_percent": ai_percent,
-                    "human_percent": human_percent,
+                    "ai_percent": ai_count / total if total else 0,
+                    "human_percent": human_count / total if total else 0,
                     "majority_label": majority_label,
                     "frame_count": total
                 }
@@ -106,15 +102,16 @@ def predict():
             preds = model.predict(img_array)
             prediction_index = int(np.argmax(preds, axis=1)[0])
             prediction_label = class_labels[prediction_index] if prediction_index < len(class_labels) else f"Unknown ({prediction_index})"
-            probabilities = preds[0].tolist()
             return jsonify({
                 "success": True,
                 "prediction_index": prediction_index,
                 "prediction_label": prediction_label,
-                "probabilities": probabilities
+                "probabilities": preds[0].tolist()
             })
+
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # NEVER use debug=True in production!
+    app.run(host="0.0.0.0", port=5000)

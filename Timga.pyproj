@@ -33,7 +33,8 @@
     <Folder Include="backend\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="backend\models\detector model v2.1.2%28curr%29.h5" />
+    <Content Include="backend\models\detector model v2.1.2%28prev%29.h5" />
+    <Content Include="backend\models\detector model v2.1.3%28curr%29.h5" />
     <Content Include="backend\requirements.txt" />
     <Content Include="frontend\static\css\styles.css" />
     <Content Include="frontend\static\js\scripts.js" />
