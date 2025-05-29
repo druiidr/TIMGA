@@ -1,15 +1,29 @@
-
 runtime: python39
 
 env_variables:
   FLASK_ENV: production
 
 resources:
-  cpu: 2
-  memory_gb: 4
+  cpu: 4
+  memory_gb: 8
   disk_size_gb: 10
 
 automatic_scaling:
   min_instances: 0
-  max_instances: 10
+  max_instances: 5
   target_cpu_utilization: 0.6
+
+readiness_check:
+  path: "/health"
+  check_interval_sec: 5
+  timeout_sec: 4
+  failure_threshold: 2
+  success_threshold: 2
+  app_start_timeout_sec: 300
+
+liveness_check:
+  path: "/health"
+  check_interval_sec: 30
+  timeout_sec: 4
+  failure_threshold: 2
+  success_threshold: 2
