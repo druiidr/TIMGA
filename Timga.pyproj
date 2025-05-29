@@ -29,7 +29,7 @@
     <Folder Include="frontend\" />
     <Folder Include="frontend\static\js\" />
     <Folder Include="frontend\static\css\" />
-    <Folder Include="frontend\docs\" />
+    <Folder Include="docs\" />
     <Folder Include="frontend\static\" />
     <Folder Include="backend\" />
   </ItemGroup>
@@ -40,7 +40,7 @@
     <Content Include="backend\requirements.txt" />
     <Content Include="frontend\static\css\styles.css" />
     <Content Include="frontend\static\js\scripts.js" />
-    <Content Include="frontend\docs\index.html" />
+    <Content Include="docs\index.html" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
