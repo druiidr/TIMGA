@@ -518,7 +518,7 @@
             try {
                 const formData = new FormData();
                 formData.append('image', file);
-                const response = await fetch('https://timga-backend-289936939757.me-west1.run.app', {
+                const response = await fetch('https://timga-backend-289936939757.me-west1.run.app/predict', {
                     method: 'POST',
                     body: formData
                 });
