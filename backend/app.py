@@ -9,7 +9,8 @@ import os
 import imageio
 
 app = Flask(__name__)
-CORS(app)
+# Restrict CORS to your GitHub Pages domain for security
+CORS(app, origins=["https://druiidr.github.io/TIMGA/"])
 
 # Load your Keras model
 model = load_model("models/detector model v2.1.2(curr).h5")

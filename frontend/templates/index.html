@@ -518,7 +518,7 @@
             try {
                 const formData = new FormData();
                 formData.append('image', file);
-                const response = await fetch('/predict', {
+                const response = await fetch('https://backend-dark-fire-4496.fly.dev/predict', {
                     method: 'POST',
                     body: formData
                 });
