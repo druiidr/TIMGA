@@ -28,7 +28,7 @@ def preprocess_image(img):
     img_array = img_array / 255.0
     return img_array
 
-@app.route("/", methods=["GET"])
+@app.route("/predict", methods=["GET","POST"])
 def index():
     return "Backend is running."
 
