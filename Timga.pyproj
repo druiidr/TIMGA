@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>7123cc5b-4102-46d4-acff-425b86a09ac6</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>backend\app.py</StartupFile>
+    <StartupFile>fullStack\backend\app.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,25 +22,25 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="backend\app.py" />
+    <Compile Include="fullStack\backend\app.py" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="backend\models\" />
-    <Folder Include="frontend\" />
-    <Folder Include="frontend\static\js\" />
-    <Folder Include="frontend\static\css\" />
-    <Folder Include="docs\" />
-    <Folder Include="frontend\static\" />
-    <Folder Include="backend\" />
+    <Folder Include="fullStack\backend\models\" />
+    <Folder Include="fullStack\frontend\" />
+    <Folder Include="fullStack\frontend\static\js\" />
+    <Folder Include="fullStack\frontend\static\css\" />
+    <Folder Include="fullStack\frontend\static\" />
+    <Folder Include="fullStack\backend\" />
+    <Folder Include="fullStack\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="backend\app.yaml" />
-    <Content Include="backend\models\detector model v2.1.2%28prev%29.h5" />
-    <Content Include="backend\models\detector model v2.1.3%28curr%29.h5" />
-    <Content Include="backend\requirements.txt" />
-    <Content Include="frontend\static\css\styles.css" />
-    <Content Include="frontend\static\js\scripts.js" />
-    <Content Include="docs\index.html" />
+    <Content Include="fullStack\backend\app.yaml" />
+    <Content Include="fullStack\backend\models\detector model v2.1.2%28prev%29.h5" />
+    <Content Include="fullStack\backend\models\detector model v2.1.3%28curr%29.h5" />
+    <Content Include="fullStack\backend\requirements.txt" />
+    <Content Include="fullStack\frontend\static\css\styles.css" />
+    <Content Include="fullStack\frontend\static\js\scripts.js" />
+    <Content Include="fullStack\frontend\static\index.html" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

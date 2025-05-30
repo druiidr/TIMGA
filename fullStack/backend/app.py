@@ -1,5 +1,4 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS, cross_origin
+from flask import Flask, request, jsonify, send_from_directory
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image as keras_image
 import numpy as np
@@ -8,8 +7,8 @@ import tempfile
 import os
 import imageio
 
-app = Flask(__name__)
-CORS(app, resources={r"/predict": {"origins": "https://druiidr.github.io"}}, supports_credentials=True)
+# Set static_folder to point to the frontend's static directory
+app = Flask(__name__, static_folder='../frontend/static', static_url_path='')
 
 # Safe path to model (important for both local and production environments)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -28,18 +27,16 @@ def preprocess_image(img):
     img_array = img_array / 255.0
     return img_array
 
-@app.route("/predict", methods=["GET"])
-def index():
-    return "Backend is running."
+@app.route('/')
+def serve_index():
+    return send_from_directory(app.static_folder, 'index.html')
 
-@app.route("/predict", methods=["POST", "OPTIONS"])
-@cross_origin(origins=["https://druiidr.github.io"])
+@app.route('/<path:path>')
+def serve_static(path):
+    return send_from_directory(app.static_folder, path)
+
+@app.route("/predict", methods=["POST"])
 def predict():
-    # Handle preflight request
-    if request.method == "OPTIONS":
-        # Flask-CORS will add the appropriate headers
-        return '', 204
-
     try:
         if 'image' not in request.files:
             return jsonify({"success": False, "error": "No image or video provided"}), 400
@@ -119,5 +116,5 @@ def predict():
         return jsonify({"success": False, "error": str(e)}), 500
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port, debug=False)
