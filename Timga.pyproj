@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>7123cc5b-4102-46d4-acff-425b86a09ac6</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>fullStack\backend\app.py</StartupFile>
+    <StartupFile>fullStack\backend\main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,7 +22,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="fullStack\backend\app.py" />
+    <Compile Include="fullStack\backend\main.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="fullStack\backend\models\" />
