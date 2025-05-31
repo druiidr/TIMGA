@@ -7,8 +7,15 @@ import tempfile
 import os
 import imageio
 
+
+
 # Set static_folder to point to the frontend's static directory
 app = Flask(__name__, static_folder='../frontend/static', static_url_path='')
+
+@app.route('/health')
+def health_check():
+    return jsonify({"status": "healthy"}), 200
+
 
 # Safe path to model (important for both local and production environments)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
