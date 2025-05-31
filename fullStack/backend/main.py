@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, send_from_directory
+from flask_cors import CORS
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image as keras_image
 import numpy as np
@@ -10,7 +11,8 @@ import imageio
 
 
 # Set static_folder to point to the frontend's static directory
-app = Flask(__name__, static_folder='../frontend/static', static_url_path='')
+app = Flask(__name__, static_folder='../frontend/docs', static_url_path='')
+CORS(app)
 
 @app.route('/health')
 def health_check():
@@ -36,7 +38,7 @@ def preprocess_image(img):
 
 @app.route('/')
 def serve_index():
-    return send_from_directory(app.static_folder, 'index.html')
+    return app.send_static_file('index.html')
 
 @app.route('/<path:path>')
 def serve_static(path):

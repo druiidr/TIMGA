@@ -27,9 +27,9 @@
   <ItemGroup>
     <Folder Include="fullStack\backend\models\" />
     <Folder Include="fullStack\frontend\" />
-    <Folder Include="fullStack\frontend\static\js\" />
-    <Folder Include="fullStack\frontend\static\css\" />
-    <Folder Include="fullStack\frontend\static\" />
+    <Folder Include="fullStack\frontend\docs\js\" />
+    <Folder Include="fullStack\frontend\docs\css\" />
+    <Folder Include="fullStack\frontend\docs\" />
     <Folder Include="fullStack\backend\" />
     <Folder Include="fullStack\" />
   </ItemGroup>
@@ -37,9 +37,9 @@
     <Content Include="fullStack\backend\app.yaml" />
     <Content Include="fullStack\backend\models\detector model v2.1.3%28curr%29.h5" />
     <Content Include="fullStack\backend\requirements.txt" />
-    <Content Include="fullStack\frontend\static\css\styles.css" />
-    <Content Include="fullStack\frontend\static\js\scripts.js" />
-    <Content Include="fullStack\frontend\static\index.html" />
+    <Content Include="fullStack\frontend\docs\css\styles.css" />
+    <Content Include="fullStack\frontend\docs\js\scripts.js" />
+    <Content Include="fullStack\frontend\docs\index.html" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
